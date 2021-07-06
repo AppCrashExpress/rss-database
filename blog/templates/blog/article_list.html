@@ -1,0 +1,32 @@
+<h1>Articles</h1>
+
+{% if article_list %}
+
+<ul>
+  {% for article in article_list %}
+    <li>
+      <a href="{% url 'blog:single_article' article.id %}"><h3>{{ article.name }}</h3></a>
+      <p>{{ article.summary }}</p>
+    </li>
+  {% endfor %}
+</ul>
+
+{% if is_paginated %}
+  {% if page_obj.has_previous %}
+    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+  {% endif %}
+
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+
+  {% if page_obj.has_next %}
+    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+  {% endif %}
+{% endif %}
+
+{% else %}
+
+<p>No articles available</p>
+
+{% endif %}
+
+<ul>
