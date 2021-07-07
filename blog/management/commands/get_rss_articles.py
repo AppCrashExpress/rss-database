@@ -20,7 +20,7 @@ class Command(BaseCommand):
         items = soup.find_all('item')
 
         filter_func = lambda x : not Article.objects.filter(name=x.find('title').text).exists()
-        unadded = filter(filter_func, items)
+        unadded = list(filter(filter_func, items))
 
         for item in unadded:
             body = BeautifulSoup(item.find('description').text, 'lxml').body
@@ -33,3 +33,9 @@ class Command(BaseCommand):
                 post_date=item.find('pubDate').text
             )
             article.save()
+
+
+        if len(unadded) == 0:
+            print("No new articles added")
+        else:
+            print(f"Added {len(unadded)} new articles")

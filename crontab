@@ -1,0 +1,5 @@
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+0 * * * * python3 /code/manage.py get_rss_articles 'https://dev.to/feed' > /proc/1/fd/1 2>/proc/1/fd/2
+
