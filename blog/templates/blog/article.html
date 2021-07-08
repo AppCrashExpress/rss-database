@@ -1,6 +1,8 @@
 <h1>{{ article.name }}</h1>
 <p>{{ article.summary }}</p>
 
+<p><a href="{{ article.original_url }}">Link to the original<a></p>
+
 <p>Posted at: {{ article.post_date }}<p>
 
 <p>{{ article.content |safe }}</p>

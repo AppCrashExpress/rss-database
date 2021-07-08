@@ -6,7 +6,6 @@
   {% for article in article_list %}
     <li>
       <a href="{% url 'blog:single_article' article.id %}"><h3>{{ article.name }}</h3></a>
-      <p>{{ article.summary }}</p>
     </li>
   {% endfor %}
 </ul>

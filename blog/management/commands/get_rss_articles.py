@@ -28,7 +28,7 @@ class Command(BaseCommand):
             
             article = Article(
                 name=item.find('title').text,
-                summary="None yet",
+                original_url=item.find('link').text,
                 content=content,
                 post_date=item.find('pubDate').text
             )

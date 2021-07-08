@@ -1,10 +1,10 @@
 from django.db import models
 
 class Article(models.Model):
-    name      = models.CharField(max_length=255)
-    summary   = models.CharField(max_length=255)
-    content   = models.TextField()
-    post_date = models.DateTimeField(auto_now=True)
+    name         = models.CharField(max_length=255)
+    original_url = models.URLField()
+    content      = models.TextField()
+    post_date    = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-post_date',)
