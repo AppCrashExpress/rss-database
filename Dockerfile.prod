@@ -5,10 +5,14 @@ ENV PYTHONUNBUFFERED=1
 RUN apt-get update \
     && apt-get install -y cron
 
-ENV HOME=/
-ENV APP_HOME=/code/
+ENV HOME=/home/app/
+ENV APP_HOME=/home/app/code/
 
+RUN useradd app \
+    && mkdir -p $HOME \
+    && mkdir $APP_HOME
 WORKDIR $APP_HOME
+
 COPY requirements.txt $APP_HOME
 RUN pip install -r requirements.txt
 
@@ -17,3 +21,6 @@ RUN chmod 0644 /etc/cron.d/crontab && \
     crontab /etc/cron.d/crontab
 
 COPY . $APP_HOME
+
+RUN chown -R app:app $APP_HOME
+USER app

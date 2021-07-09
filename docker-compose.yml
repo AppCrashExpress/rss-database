@@ -10,17 +10,26 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   web:
-    build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-    ports:
-      - "8000:8000"
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    command: gunicorn events.wsgi:application --bind 0.0.0.0:8000
     depends_on:
       - db
 
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./staticfiles:/home/app/code/staticfiles
+    ports:
+      - 8080:80
+    depends_on:
+      - web
+
   cronjobs:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: ["cron", "-f"]
     depends_on:
       - db
